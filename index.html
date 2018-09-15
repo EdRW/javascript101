@@ -81,6 +81,9 @@
         var rootDiv = document.createElement('div');
         rootDiv.id = 'rootContainer';
         var companyNamesContainer = document.createElement('div');
+        companyNamesContainer.id = 'companyNamesContainer';
+        companyNamesContainer.style.display = 'flex';
+        companyNamesContainer.style.flexDirection = 'column';
         chicagoStartups.forEach( function(chicagoStartup, index) {
             var childDiv = document.createElement('div');
             var text = document.createTextNode(index.toString().concat(' .) ').concat(chicagoStartup));
@@ -89,6 +92,14 @@
         });
         rootDiv.appendChild(companyNamesContainer);
         document.body.appendChild(rootDiv);
+
+        var toggleBtn = document.createElement('button');
+        var btnText = document.createTextNode('Toggle Display');
+        toggleBtn.onclick = toggleDisplay;
+        toggleBtn.appendChild(btnText);
+        var toggleButtonContainer = document.createElement('div');
+        toggleButtonContainer.appendChild(toggleBtn);
+        rootDiv.appendChild(toggleButtonContainer);
     }
 
     function renderReversedElements() {
@@ -131,16 +142,38 @@
     function cleanAndCountCharacters() {
         console.log('CLEAN AND COUNT CHARACTERS');
         /*
-            TODO: REMOVES ANY SPECIAL CHARACTERS FROM EACH COMPANY NAME AND
+              REMOVES ANY SPECIAL CHARACTERS FROM EACH COMPANY NAME AND
               DISPLAYS THE NUMBER OF REMAINING CHARACTERS NEXT TO THE FULL WORD.
               DONT FORGET TO REMOVE LEADING AND TRAILING WHITESPACES AS WELL
         */
         
+        clearContainer('reverseContainer');
+        clearContainer('companyNamesContainer');
+        var companyNamesContainer = document.getElementById('companyNamesContainer');
+        chicagoStartups.forEach( function(chicagoStartup, index) {
+            var cleanName = chicagoStartup.replace(/[^A-Za-z]/g, '');
+            var nameLen = cleanName.length;
+            var childDiv = document.createElement('div');
+            var text = document.createTextNode(index.toString().concat(' .) ').concat(cleanName).concat(' ' + nameLen));
+            childDiv.appendChild(text);
+            companyNamesContainer.appendChild(childDiv);
+        });
+    }
+
+    function clearContainer(containerName){
+        var container = document.getElementById(containerName);
+        if (container) {
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+        }
     }
     
     function initReverse() {
         var reverseContainer = document.createElement('div');
         reverseContainer.id = 'reverseContainer';
+        reverseContainer.style.display = 'flex';
+        reverseContainer.style.flexDirection = 'column';
         var reverseBtn = document.createElement('button');
         var btnText = document.createTextNode('Reverse');
         reverseBtn.onclick = renderReversedElements;
@@ -166,6 +199,15 @@
 
             3.  
         */
+
+        var reverseContainer = document.getElementById('reverseContainer');
+        if (reverseContainer){
+            reverseContainer.style.flexDirection = reverseContainer.style.flexDirection == 'column' ? 'row' : 'column';
+        }
+        var companyNamesContainer = document.getElementById('companyNamesContainer');
+        if (companyNamesContainer){
+            companyNamesContainer.style.flexDirection = companyNamesContainer.style.flexDirection == 'column' ? 'row' : 'column';
+        }
     }
     
     function run() {

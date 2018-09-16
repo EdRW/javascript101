@@ -47,6 +47,10 @@
 </style>
 
 <script>
+    // Github url: https://github.com/xNeophyte/javascript101
+    // Link to page vertical mockup https://wireframe.cc/PFlOJr
+    // Link to page horizontal mockup https://wireframe.cc/2xLfF3
+
     var colors = ['red', 'blue', 'gold'];
     var chicagoStartups = [
         '  Interior   Define  ',
@@ -67,6 +71,31 @@
         'ParkWhiz'
     ];
 
+    class CharTracker {
+        constructor(){
+            this.charStats = {};
+        }
+
+        addName(name) {
+            for(let i = 0; i < name.length; i++){
+                let char = name.charAt(i).toUpperCase();
+                if (this.charStats[char]) {
+                    this.charStats[char]++;
+                }
+                else{
+                    this.charStats[char] = 1;
+                }
+            }
+        }
+
+        print() {
+            console.log('Current Char Tracker Status');
+            for(let char in this.charStats) {
+                console.log(char + ': ' + this.charStats[char]);
+            }
+        }
+    }
+
     function clearDocument() {
         var rootDiv = document.getElementById('rootContainer');
         if (rootDiv) {
@@ -80,6 +109,9 @@
         clearDocument();
         var rootDiv = document.createElement('div');
         rootDiv.id = 'rootContainer';
+
+        var headerElement = document.createElement('header');
+        
         var companyNamesContainer = document.createElement('div');
         companyNamesContainer.id = 'companyNamesContainer';
         companyNamesContainer.style.display = 'flex';
@@ -133,7 +165,7 @@
 
     function chicagoStartupsReverse() {
         var reversedStartups = [];
-        for (var i = 0; i < chicagoStartups.length; i++){
+        for (let i = 0; i < chicagoStartups.length; i++){
             reversedStartups.push(chicagoStartups[chicagoStartups.length-1 - i]);
         }
         return reversedStartups;
@@ -149,15 +181,23 @@
         
         clearContainer('reverseContainer');
         clearContainer('companyNamesContainer');
+        var charTracker = new CharTracker();
+        charTracker.print();
+
         var companyNamesContainer = document.getElementById('companyNamesContainer');
         chicagoStartups.forEach( function(chicagoStartup, index) {
             var cleanName = chicagoStartup.replace(/[^A-Za-z]/g, '');
             var nameLen = cleanName.length;
+
+            charTracker.addName(cleanName);
+
             var childDiv = document.createElement('div');
             var text = document.createTextNode(index.toString().concat(' .) ').concat(cleanName).concat(' ' + nameLen));
             childDiv.appendChild(text);
             companyNamesContainer.appendChild(childDiv);
         });
+
+        charTracker.print();
     }
 
     function clearContainer(containerName){

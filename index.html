@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <h3>Javascript Basics</h3>
-    <button onclick="cleanAndCountCharacters()">
-        clean and count words
-    </button>
     <body>
     </body>
 </html>
 
 <style>
     #rootContainer {
-        display: flex;
-
+        
+        background: lightgray;
     }
+    #reverseContainer{
+        background: lightgreen;
+    }
+    #companyNamesContainer{
+        background: lightpink;
+    }
+
     .root-container {
         position: relative;
     }
@@ -21,8 +24,9 @@
         position: relative;
     }
 
-    .root-container .main {
-        position: relative;
+    .root-container main {
+        display: flex;
+        
     }
 
     .root-container .footer {
@@ -30,19 +34,19 @@
     }
 
     .startups-container {
-        background-color: gray;
+        width: 50%;
     }
 
     .red {
-        background-image: red;
+        background: red;
     }
 
     .blue {
-        background-image: blue;
+        background: blue;
     }
 
     .gold {
-        background-image: gold;
+        background: gold;
     }
 </style>
 
@@ -109,29 +113,50 @@
         clearDocument();
         var rootDiv = document.createElement('div');
         rootDiv.id = 'rootContainer';
-
-        var headerElement = document.createElement('header');
-        
-        var companyNamesContainer = document.createElement('div');
-        companyNamesContainer.id = 'companyNamesContainer';
-        companyNamesContainer.style.display = 'flex';
-        companyNamesContainer.style.flexDirection = 'column';
-        chicagoStartups.forEach( function(chicagoStartup, index) {
-            var childDiv = document.createElement('div');
-            var text = document.createTextNode(index.toString().concat(' .) ').concat(chicagoStartup));
-            childDiv.appendChild(text);
-            companyNamesContainer.appendChild(childDiv);
-        });
-        rootDiv.appendChild(companyNamesContainer);
         document.body.appendChild(rootDiv);
 
+        var headerElement = document.createElement('header');
+        var headerh3 = document.createElement('h3');
+        var headerTextNode = document.createTextNode('Javascript Basics');
+        headerh3.appendChild(headerTextNode);
+        headerElement.appendChild(headerh3);
+        rootDiv.appendChild(headerElement);
+        
+        var navElement = document.createElement('nav');
+        navElement.classList.add('red');
+        rootDiv.appendChild(navElement);
+        
+        var cleanAndCountBtn = document.createElement('button');
+        var cleanAndCountBtnText = document.createTextNode('Clean and Count Words');
+        cleanAndCountBtn.onclick = cleanAndCountCharacters;
+        cleanAndCountBtn.appendChild(cleanAndCountBtnText);
+        var cleanAndCountBtnContainer = document.createElement('div');
+        cleanAndCountBtnContainer.appendChild(cleanAndCountBtn);
+        navElement.appendChild(cleanAndCountBtnContainer); 
+
         var toggleBtn = document.createElement('button');
-        var btnText = document.createTextNode('Toggle Display');
+        var toggleBtnText = document.createTextNode('Toggle Display');
         toggleBtn.onclick = toggleDisplay;
-        toggleBtn.appendChild(btnText);
+        toggleBtn.appendChild(toggleBtnText);
         var toggleButtonContainer = document.createElement('div');
         toggleButtonContainer.appendChild(toggleBtn);
-        rootDiv.appendChild(toggleButtonContainer);
+        navElement.appendChild(toggleButtonContainer);        
+
+        var reverseBtn = document.createElement('button');
+        var reverseBtnText = document.createTextNode('Reverse');
+        reverseBtn.onclick = renderReversedElements;
+        reverseBtn.appendChild(reverseBtnText);
+        var reverseButtonContainer = document.createElement('div');
+        reverseButtonContainer.appendChild(reverseBtn);    
+        navElement.appendChild(reverseButtonContainer);
+
+        var mainElement = document.createElement('main');
+        mainElement.classList.add('blue');
+        rootDiv.appendChild(mainElement);
+
+        var footerElement = document.createElement('footer');
+        footerElement.classList.add('gold');
+        rootDiv.appendChild(footerElement);     
     }
 
     function renderReversedElements() {
@@ -214,14 +239,25 @@
         reverseContainer.id = 'reverseContainer';
         reverseContainer.style.display = 'flex';
         reverseContainer.style.flexDirection = 'column';
-        var reverseBtn = document.createElement('button');
-        var btnText = document.createTextNode('Reverse');
-        reverseBtn.onclick = renderReversedElements;
-        reverseBtn.appendChild(btnText);
-        var reverseButtonContainer = document.createElement('div');
-        reverseButtonContainer.appendChild(reverseBtn);    
-        document.getElementById('rootContainer').appendChild(reverseButtonContainer);
-        document.getElementById('rootContainer').appendChild(reverseContainer);
+        reverseContainer.classList.add('startups-container');
+        var mainDiv = document.getElementsByTagName('main')[0];
+        mainDiv.appendChild(reverseContainer);
+    }
+
+    function intiCompanyNames(){
+        var companyNamesContainer = document.createElement('div');
+        companyNamesContainer.id = 'companyNamesContainer';
+        companyNamesContainer.style.display = 'flex';
+        companyNamesContainer.style.flexDirection = 'column';
+        companyNamesContainer.classList.add('startups-container');
+        chicagoStartups.forEach( function(chicagoStartup, index) {
+            var childDiv = document.createElement('div');
+            var text = document.createTextNode(index.toString().concat(' .) ').concat(chicagoStartup));
+            childDiv.appendChild(text);
+            companyNamesContainer.appendChild(childDiv);
+        });
+        var mainDiv = document.getElementsByTagName('main')[0];
+        mainDiv.appendChild(companyNamesContainer);
     }
 
     function toggleDisplay() {
@@ -250,9 +286,10 @@
         }
     }
     
-    function run() {
-        initDocument();
-        initReverse();
+    function run() {        
+        initDocument(); //create header, nav bar, main, and footer
+        intiCompanyNames(); //create and init company names container in main
+        initReverse(); //create and init reverse container in main       
     }
     run();
     

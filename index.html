@@ -6,7 +6,13 @@
 
 <style>
     #rootContainer {
-        
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        grid-template-rows: 1fr 5fr 3fr;
+        grid-template-areas:
+            "header header header header header header"
+            "nav main main main main main"
+            "footer footer footer footer footer footer";
         background: lightgray;
     }
     #reverseContainer{
@@ -16,25 +22,37 @@
         background: lightpink;
     }
 
-    .root-container {
+    #root-container {
         position: relative;
     }
 
-    .root-container .header {
+    #rootContainer header {
+        background: green;
         position: relative;
+        grid-area: header;
     }
 
-    .root-container main {
+    #rootContainer nav{
+        background: red;
+        grid-area: nav;
+    }
+
+    #rootContainer main {
+        background: blue;
         display: flex;
-        
+        flex-direction: row;
+        padding: 5px;
+        grid-area: main;
     }
 
-    .root-container .footer {
+    #rootContainer footer {
+        background: gold;
         position: relative;
+        grid-area: footer;
     }
 
     .startups-container {
-        width: 50%;
+        width: auto;
     }
 
     .red {
@@ -123,7 +141,7 @@
         rootDiv.appendChild(headerElement);
         
         var navElement = document.createElement('nav');
-        navElement.classList.add('red');
+        //navElement.classList.add('red');
         rootDiv.appendChild(navElement);
         
         var cleanAndCountBtn = document.createElement('button');
@@ -151,11 +169,11 @@
         navElement.appendChild(reverseButtonContainer);
 
         var mainElement = document.createElement('main');
-        mainElement.classList.add('blue');
+        //mainElement.classList.add('blue');
         rootDiv.appendChild(mainElement);
 
         var footerElement = document.createElement('footer');
-        footerElement.classList.add('gold');
+        //footerElement.classList.add('gold');
         rootDiv.appendChild(footerElement);     
     }
 
@@ -210,6 +228,7 @@
         charTracker.print();
 
         var companyNamesContainer = document.getElementById('companyNamesContainer');
+        var reverseContainer = document.getElementById('reverseContainer');
         chicagoStartups.forEach( function(chicagoStartup, index) {
             var cleanName = chicagoStartup.replace(/[^A-Za-z]/g, '');
             var nameLen = cleanName.length;
@@ -220,6 +239,7 @@
             var text = document.createTextNode(index.toString().concat(' .) ').concat(cleanName).concat(' ' + nameLen));
             childDiv.appendChild(text);
             companyNamesContainer.appendChild(childDiv);
+            //reverseContainer.appendChild(childDiv);
         });
 
         charTracker.print();
@@ -284,6 +304,11 @@
         if (companyNamesContainer){
             companyNamesContainer.style.flexDirection = companyNamesContainer.style.flexDirection == 'column' ? 'row' : 'column';
         }
+        var mainElement = document.getElementsByTagName('main')[0];
+        if (mainElement){
+            mainElement.style.flexDirection = mainElement.style.flexDirection == 'column' ? 'row' : 'column';
+        }
+
     }
     
     function run() {        

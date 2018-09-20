@@ -7,6 +7,7 @@
 <style>
     h1, h2, h3 {
         text-align: center;
+        color: #1a3385
     }
 
     #rootContainer {
@@ -17,8 +18,9 @@
             "header header header header header header"
             "nav main main main main main"
             "footer footer footer footer footer footer";
-        grid-gap: 10px;        
-        background: lightgray;
+        grid-gap: 5px;        
+        background: #1a3385a4;
+        padding: 5px;
     }
     #reverseContainer{
         background: #63A375;
@@ -39,7 +41,19 @@
 
     #rootContainer nav{
         background: #CA6680;
+        text-align: center;
         grid-area: nav;
+        /*
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        */
+    }
+    
+    #rootContainer nav button{
+        width: 90%;
+        height: 50px;
+        margin:10px;
     }
 
     #rootContainer main {
